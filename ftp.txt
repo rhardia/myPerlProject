@@ -1,0 +1,19 @@
+open NEWSYS02
+FC5ADMIN
+testing5
+bin
+cd /GMI/FLFCS5/GMS/20180704/USERDATA/GMR/DATA
+get ps_GMR.gms
+cd /GMI/FLFCS5/GMS/EXCHDATA
+get cfe.par
+get ccl.par
+get mge.par
+get ocx.par
+get cde.par
+get tfx.par
+get smx.par
+get nfx.par
+cd /FC5
+get GMICLCF1.CSV
+get GMICLCF2.CSV
+quit
