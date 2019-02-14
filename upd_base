@@ -1,0 +1,3 @@
+#! /bin/ksh
+export PERL5LIB=${_BASE}/util
+perl  ${_BASE}/util/upd_base.pl cfg=${_BASE}/cfg/gms.cfg $1 $2

@@ -1,0 +1,3 @@
+#! /bin/ksh
+#perl ${_BASE}/util/analysisRep_auto.pl $1 $2
+perl  ${_BASE}/util/analysis.pl $1 $2

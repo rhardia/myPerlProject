@@ -1,0 +1,13 @@
+#! /bin/bash
+. gms_init_env.sh -bw$1 $2
+build=$1$2
+echo $build
+export PERL5LIB=${_BASE}/util
+cfgfile=gms${DATA_MODEL}_exch.cfg
+rm /qa/regression/gms/cfg/default_606_exch.txt
+for arg
+do
+echo RUNNING $arg REGRESSION
+grep ^$arg /qa/regression/gms/cfg/default_606.txt >> /qa/regression/gms/cfg/default_606_exch.txt
+done
+#perl ${_BASE}/util/autotest-mec.pl cfg=${_BASE}/cfg/${cfgfile} ${build} ${3} ${4}

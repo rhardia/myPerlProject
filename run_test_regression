@@ -1,0 +1,49 @@
+#! /bin/bash
+export PERL5LIB=${_BASE}/util
+cfgfile=gms${DATA_MODEL}.cfg
+while getopts "hb:a:e:" arg; do
+  case $arg in
+    h)
+      echo "usage"
+	  echo "-b Branch Name"
+	  echo "-a Alternate regression test directory"
+	  echo "-e Exch or specific test cases to execute seperated by :"
+	  exit 1
+	  ;;
+    b)
+      branch=$OPTARG
+	  altTest=${branch}
+      ;;
+	a)
+	  altTest=$OPTARG
+	  if [ -z "${altTest}" ]; then
+		altTest=${branch}
+	  fi
+	  ;;
+	e)
+      list=$OPTARG
+	  echo RUNNING $list REGRESSION test cases
+	  cfgfile=gms${DATA_MODEL}_exch.cfg
+	  rm ${_BASE}/cfg/default_606_exch.txt
+      IFS=:
+	  ary=($list)
+		for key in "${!ary[@]}";
+			do echo "$key ${ary[$key]}"; 
+			grep ^${ary[$key]} ${_BASE}/cfg/default_606.txt >> ${_BASE}/cfg/default_606_exch.txt
+		done
+	  ;;	  
+   ?)
+      echo "usage"
+	  echo "-b Branch Name"
+	  echo "-a Alternate regression test directory"
+	  echo "-e Exch or specific test cases to execute seperated by :"
+	  exit 1
+	  ;;
+ esac
+ done
+if [ -z "${branch}" ]; then
+	echo "Please give branch name with -b "
+	exit 1
+fi
+. gms_init_env.sh -bw${branch}
+perl ${_BASE}/util/autotest-mec_rohit.pl cfg=${_BASE}/cfg/${cfgfile} ${altTest}

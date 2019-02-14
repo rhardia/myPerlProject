@@ -1,0 +1,8 @@
+#! /bin/bash
+. gms_init_env.sh -bw$1 $2
+build=$1$2
+echo $build
+export PERL5LIB=${_BASE}/util
+cfgfile=gms${DATA_MODEL}.cfg
+#cfgfile==one_gms64.cfg
+perl ${_BASE}/util/autotest-mec.pl cfg=${_BASE}/cfg/${cfgfile} ${build} ${3} ${4}

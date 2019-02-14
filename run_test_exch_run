@@ -1,0 +1,25 @@
+#! /bin/bash
+if [ "$2" = "--v2" ] || [ "$2" = "-v2" ] || [ "$2" = "v2" ] || [ "$2" = "--V2" ] || [ "$2" = "-V2" ] || [ "$2" = "V2" ] ; then
+	. gms_init_env.sh -bw$1 $2
+	build=$1$2
+	shift
+	shift
+else
+	. gms_init_env.sh -bw$1
+	build=$1
+	shift
+fi
+echo $build
+export PERL5LIB=${_BASE}/util
+if [ $# = 0 ] ; then
+	cfgfile=gms${DATA_MODEL}.cfg
+else
+	cfgfile=gms${DATA_MODEL}_exch.cfg
+	rm ${_BASE}/cfg/default_606_exch.txt
+	for arg
+	do
+		echo RUNNING $arg REGRESSION
+		grep ^$arg ${_BASE}/cfg/default_606.txt >> ${_BASE}/cfg/default_606_exch.txt
+	done
+fi
+echo ${_BASE}/util/autotest-mec.pl cfg=${_BASE}/cfg/${cfgfile} ${build} ${3} ${4}
